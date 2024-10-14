@@ -19,3 +19,7 @@ Requires jQuery 1.7+ at a minimum (for `.on()`) and jQuery 1.8+ for full functio
 *Note:* Bigfoot is currently incompatible with jQuery 3.0+ (see [#54](https://github.com/lemonmade/bigfoot/issues/54))
 
 Questions? Issues? Feature requests? Check out the [Github page](https://github.com/lemonmade/bigfoot) for this project.
+
+## To build this
+- Run `npm install` to install dependencies
+- Run `npx grunt-cli` to build
