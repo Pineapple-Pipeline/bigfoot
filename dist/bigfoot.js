@@ -613,7 +613,7 @@
         }
         $popoversCreated = $();
         $buttons.each(function() {
-          var $content, $contentContainer, $this, content;
+          var $content, $contentContainer, $this, color, content;
           $this = $(this);
           content = void 0;
           try {
@@ -624,6 +624,51 @@
           } finally {
             // Create content and activate user-defined callback on it
             $content = $(content);
+            // Create close button with icon
+            $content.append('<button class="close-btn">X</button>');
+            // Add a button to hide/Show all the buttons added above
+            $content.append('<button class="hide-show-btn">...</button>');
+            // Create "Copy" button
+            $content.append('<button class="copy-btn" hidden>Copy</button>');
+            // Attach the Copy event listener
+            $content.find('.copy-btn').on('click', function() {
+              var footnoteContent;
+              footnoteContent = $content.find(".bigfoot-footnote__content").text();
+              return navigator.clipboard.writeText(footnoteContent).then(function() {
+                return alert('Footnote copied to clipboard!');
+              }).catch(function(err) {
+                return console.error('Failed to copy text: ', err);
+              });
+            });
+            
+            // Close the popover and make the original button active again, use animation
+            $content.find('.close-btn').on('click', function() {
+              $content.removeClass("is-active");
+              $this.removeClass("is-active");
+              return setTimeout((function() {
+                return $content.remove();
+              }), settings.popoverDeleteDelay);
+            });
+            // Load the color of the footnote from local storage if it exists
+            color = localStorage.getItem("footnote-color");
+            if (color) {
+              $content.find(".bigfoot-footnote__content").css("color", color);
+            }
+            
+            // Create a color picker for the footnote and use value load the color from local storage
+            $content.append('<input type="color" id="color-picker" value="#000000" hidden>');
+            $content.find('#color-picker').val(color);
+            
+            // Change the text color of the footnote and save the color in local storage
+            $content.find('#color-picker').on('change', function() {
+              color = $(this).val();
+              $content.find(".bigfoot-footnote__content").css("color", color);
+              return localStorage.setItem("footnote-color", color);
+            });
+            // Hide / show the buttons and the footnote content
+            $content.find('.hide-show-btn').on('click', function() {
+              return $content.find('.copy-btn').toggle();
+            });
             try {
               settings.activateCallback($content, $this);
             } catch (error) {}
