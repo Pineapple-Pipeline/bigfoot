@@ -695,6 +695,19 @@
         finally
           # Create content and activate user-defined callback on it
           $content = $(content)
+
+          # Create "Copy" button
+          $content.append('<button class="copy-btn">Copy</button>')
+
+          # Attach the Copy event listener
+          $content.find('.copy-btn').on 'click', ->
+            footnoteContent = $content.find(".bigfoot-footnote__content").text()
+            navigator.clipboard.writeText(footnoteContent).then ->
+              alert('Footnote copied to clipboard!')
+            .catch (err) ->
+              console.error('Failed to copy text: ', err)
+
+              
           try
             settings.activateCallback $content, $this
           $content.insertAfter $buttons
