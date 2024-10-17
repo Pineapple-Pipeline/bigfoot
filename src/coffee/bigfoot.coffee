@@ -710,7 +710,7 @@
               alert('Footnote copied to clipboard!')
             .catch (err) ->
               console.error('Failed to copy text: ', err)
-          
+              
           # Close the popover and make the original button active again, use animation
           $content.find('.close-btn').on 'click', ->
             $content.removeClass "is-active"
@@ -737,7 +737,7 @@
           # Hide / show the buttons and the footnote content
           $content.find('.hide-show-btn').on 'click', ->
             $content.find('.copy-btn').toggle()
-            $content.find('#color-picker').toggle()
+
           try
             settings.activateCallback $content, $this
           $content.insertAfter $buttons
