@@ -665,9 +665,10 @@
               $content.find(".bigfoot-footnote__content").css("color", color);
               return localStorage.setItem("footnote-color", color);
             });
-            // Hide / show the buttons and the footnote content
+            // Hide/Show the buttons
             $content.find('.hide-show-btn').on('click', function() {
-              return $content.find('.copy-btn').toggle();
+              $content.find('.copy-btn').toggle();
+              return $content.find('#color-picker').toggle();
             });
             try {
               settings.activateCallback($content, $this);
